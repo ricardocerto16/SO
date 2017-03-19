@@ -6,7 +6,7 @@ int main ( ){
 
 	int x = fork();
 	if (x == 0) {
-	execlp("ls","ls","-l",NULL);
+	execl("/bin/ls","ls","-l",NULL);
 	}
 	_exit(1);
 	return 0;

@@ -3,7 +3,7 @@
 int main ( ){
 
 
-	execlp("ls","ls","-l",NULL);
+	execl("/bin/ls","ls","-l",NULL);
 
 	return 0;
 }
