@@ -4,7 +4,7 @@
 
 * int     open(const char*path, int oflag [, mode]);
 open -> serve para abrir um ficheiro com as devidas permissões
-returns -> retorna -1 em caso de insucesso em caso de sucesso retorna um descritor desse ficheiro
+\n returns -> retorna -1 em caso de insucesso em caso de sucesso retorna um descritor desse ficheiro
 
 
 * ssize_t read(int fildes, void*buf, size_t nbyte);
