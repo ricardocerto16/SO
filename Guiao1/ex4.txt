@@ -1,0 +1,34 @@
+// EXERCICIO 4:
+
+
+MYCATNBYTES:
+
+>> time ./mycatnbytes 1 <10mb.txt> /tmp/lixo
+resultado:
+real	0m0.354s
+user	0m0.000s
+sys	0m0.060s
+
+>> time ./mycatnbytes 1024 <10mb.txt> /tmp/lixo
+resultado:
+real	0m0.079s
+user	0m0.004s
+sys	0m0.072s
+
+
+MYCAT:
+
+>> time ./mycat 1 <10mb.txt> /tmp/lixo
+resultado:
+real	0m10.090s
+user	0m0.616s
+sys	0m9.472s
+
+>> time ./mycat 1024s <10mb.txt> /tmp/lixo
+resultado:
+real	0m10.219s
+user	0m0.536s
+sys	0m9.676s
+
+
+RESPOSTA: Em ambos os casos podemos verificar que o tempo de execução é ligeiramente mais rápido quando utilizamos blocos de 1 byte.
