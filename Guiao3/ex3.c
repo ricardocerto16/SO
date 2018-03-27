@@ -1,19 +1,14 @@
 #include <unistd.h>
-#include <sys/wait.h>
 #include <stdio.h>
-#include <stdlib.h> 
 
-int main (int argc , char * argv[] ){
 
+int main(int argc, char const *argv[]){
+	
 	int i;
 
-
-	for(i=0;i < argc ; i++) {
-
-		printf("%s\n",argv[i]);
+	for (i = 0 ; i < argc ; i++ ){
+		printf("Arg %d -> %s \n",i,argv[i]);
 	}
-
-
 
 	return 0;
 }

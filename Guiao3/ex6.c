@@ -1,27 +1,21 @@
-#include <sys/wait.h>
-#include <string.h>
-#include <stdio.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <string.h>
 #include <fcntl.h>
 
+//system("ls -l");
+int mysystem( char * comando ) {
 
-// int system(const char *comand) 
-// executa um comando como fosse o terminal
-
-int mysystem(char *comando){
-
-	int fork_t , exec_t , wait_t , status , res;
-
-	// assumindo que o nr max de args é 20
-	// doutra forma tinhamos que fazer realloc
-	char *exec_args[20];
-	char *string;
+	char * string;
+	char * exec_args[20];
 	int i = 0;
+	int resfork, execution, espera, status, res;
 
-	// strtok -> parte uma string dada uma partição
 	string = strtok(comando," ");
 
-	while(string!=NULL) {
+	while(string != NULL) {
 		exec_args[i] = string;
 		string = strtok(NULL," ");
 		i++;
@@ -29,54 +23,51 @@ int mysystem(char *comando){
 
 	exec_args[i] = NULL;
 
-	fork_t = fork();
-	if( fork_t == 0) {
 
-		exec_t = execvp(exec_args[0],exec_args);
-		_exit(exec_t);
+	resfork = fork();
+	if(resfork == 0) { // filho
+
+		execution = execvp(exec_args[0],exec_args);
+		_exit(execution);
+		// o exit retorna o valor do exec dizendo se correu bem ou não
 	}
 	else {
-		if(fork_t!=-1){
+		if( resfork != -1) { // PAI
 
-			wait_t = wait(&status);
+			// espera que o pai execute
+			espera = wait(&status);
 
-			if(WIFEXITED(status)) {
+			
+			if(WIFEXITED(status)){
 				res = WEXITSTATUS(status);
 			}
 			else {
 				res = -1;
 			}
 		}
+
 		else {
 			res = -1;
 		}
 	}
-
 	return res;
 }
 
-
-
-
-
-
-int main(int argc , char *argv[]){
-
+int main(int argc, char const *argv[]){
+	
 	char comando1[] = "ls -l -a -h";
 	char comando2[] = "sleep 10";
-	char comando3[] = "ps";
-	int ret;
+	int ret1, ret2;
 
-	printf("A executar o mysystem para %s\n", comando1 );
-	ret = mysystem(comando1);
-	printf("ret : %d \n",ret);
+	printf("A executar o comando: %s\n",comando1);
+	ret1 = mysystem(comando1);
+	printf("RETURN: %d\n", ret1);
 
-	printf("A executar o mysystem para %s\n", comando2 );
-	mysystem(comando2);
 
-	printf("A executar o mysystem para %s\n", comando3 );
-	mysystem(comando3);
+	printf("A executar o comando: %s\n",comando2);
+	ret2 = mysystem(comando2);
+	printf("RETURN: %d\n", ret2);
+
 
 	return 0;
 }
-
