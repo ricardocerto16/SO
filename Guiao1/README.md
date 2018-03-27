@@ -23,4 +23,6 @@ close -> fecha um ficheiro
 #### Standart Inputs/Outputs
 
 stdin -> 0 -> Teclado
+
+
 stdout -> 1 -> Monitor
