@@ -5,59 +5,41 @@
 #include <string.h>
 #include <unistd.h>
 
-/*
-    pfd[0]-> leitura (output)
-    
-    pfd[1]-> escrita (input)
 
-                 _______________
-          _(pfd[1])->|____PIPE______|->(pfd[0])_ 
-         /                                      \
-        |                                        |
-    write()                                   read()
-*/
 
-int main(int argc , char* argv[]) {
-
+int main(int argc, char *argv[]){
+	
 	int fd[2];
-	int fk;
-	char stg[1024];
-	int n;
+	int fk, n;
+	char buffer[1024];
+	pipe(fd);
+	char * msg1 = "mensagem inicial \n";
+	char * msg2 = "Final \n";
 
+	fk = fork();
+	if( fk == 0) {
 
-	 if ( pipe(fd) < 0) {
-	 	perror("ERRO AO CRIAR PIPE");
-	 	return 1;
-	 }
+		close(fd[1]); // fechou a escrita ao filho porque ele só vai escrever
+		while((n = read(fd[0],buffer,sizeof(buffer))) > 0 ){
+			write(1,buffer,n);
+		} 
+		close(fd[0]); // depois de efetuar as leituras fecha o descritor de leitura
+		_exit(0);
+	}
+	else {
+		if (fk == -1) { printf("ERRO NO FORK\n");}
+		else {
 
-	 fk = fork();
-	 if(fk == 0) {
-	 	close(fd[0]); // fechar a saída ao filho 
-	 	
-	 	while((n = read(fd[0],stg,sizeof(stg))) > 0) {
-	 		//sleep(5);
-	 		write(1,stg,n);
-	 	}
-	 	close(fd[1]);
-	 	_exit(1);
+			close(fd[0]); // fechou a leitura para o pai
+			sleep(5); // bloqueia o read até ser sido escrito alguma coisa no pipe
 
-	 }
-	 else {
-	 	if(fk==-1) {perror("ERRO NO FORK"); return 1;}
-	 	else {
+			write(fd[1],msg1,strlen(msg1));
+			write(fd[1],msg2,strlen(msg2));
 
-	 		
-	 	
-	 		while((n=read(0,stg,sizeof(stg))) > 0) {
+			close(fd[1]); // fecha a escrita depois de um pai escrever
 
-	 			//sleep(5);
-	 			write(fd[1],stg,n);
-	 		}
-	 		_exit(1);
-	 		close(fd[1]);
-
-	  }
-	 }
+		}
+	}
 
 
 	return 0;
