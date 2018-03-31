@@ -35,5 +35,7 @@ Se o descritor newfd foi previamente aberto, é silenciosamente fechado antes de
 
 
 * dup2(fd,0);
+
+
 redirecionar o std input para o ficheiro que tem fd como descritor de ficheiro. fd é o resultado de fazer um open ao ficheiro.
 	
