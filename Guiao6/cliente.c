@@ -26,17 +26,16 @@ int mkfifo(const char *pathname, mode_t mode);
 
 int main(int argc, char *argv[]){
 
-	int op, n;
-	char buffer[512];
+	int op;
+	char buffer[256];
+	int n;
 
+	op = open("server_pipe",O_WRONLY);
 
-	op = open("pipe_1",O_WRONLY);
+	printf("INSIRIR MSG A ENVIAR:\n");
 
-	if( op == -1){
-		printf("ERRO NA ABERTURA DO PIPE\n");
-	}
+	while( ( n = read(0,buffer,256)) > 0){
 
-	while( (n = read(0,buffer,512)) > 0){
 		write(op,buffer,n);
 	}
 

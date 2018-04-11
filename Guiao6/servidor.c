@@ -26,21 +26,31 @@ int mkfifo(const char *pathname, mode_t mode);
 
 int main(int argc, char *argv[]){
 
-	int op, n;
-	char buffer[512];
+	int fdpipe;
+	int fdlog, n;
+	char buffer[256];
 
+	fdpipe = mkfifo("server_pipe",0777);
 
-	op = open("pipe_1",O_WRONLY);
-
-	if( op == -1){
-		printf("ERRO NA ABERTURA DO PIPE\n");
+	if (fdpipe == -1) {
+		perror("ERRO NO PIPE\n");
 	}
 
-	while( (n = read(0,buffer,512)) > 0){
-		write(op,buffer,n);
+	if (fork() == 0) {
+
+		fdpipe = open("server_pipe",O_RDONLY);
+		dup2(fdpipe,0);
+		close(fdpipe);
+		fdlog = open("log.txt",O_CREAT|O_WRONLY,0666);
+		dup2(fdlog,1);
+		close(fdlog);
+
+		while( (n = read(0,buffer,256)) > 0){
+
+			write(1,buffer,n);
+		}
 	}
 
-	close(op);
 
 	return 0;
 }

@@ -1,6 +1,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
 
 /* PIPES COM NOME
 
@@ -17,28 +20,30 @@ int mkfifo(const char *pathname, mode_t mode);
 
 */
 
+// pipes com nome tem um bloqueio extra
+// é só começam a executar quando existe um par na mesma etapa
+// 1 de leitura e 1 de escritas
 
-int main(int argc , char* argv[]) {
 
-	int op, w;
-	char dd[1024];
-	
+int main(int argc, char *argv[]){
 
-	op = open("ola",O_RDONLY); 
-	
+	int op, n;
+	char buffer[512];
 
-	while(1) {
 
-		printf("Estou á espera\n");
-		
-		w = read(op,dd,1024);
-		write(0,dd,w);
-		
-		printf("1 2 3 Mensagem recebida\n");
-		printf("Repito , mensagem repetida\n");
+	op = open("pipe_1",O_RDONLY);
 
+	if( op == -1){
+		printf("ERRO NA ABERTURA DO PIPE\n");
 	}
 
+
+	while( (n = read(op,buffer,512)) > 0 ){
+		
+		write(0,buffer,n);
+
+		printf("Mensagem recebida\n");
+	}
 
 	close(op);
 
