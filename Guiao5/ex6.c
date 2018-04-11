@@ -7,7 +7,7 @@
 
 
 
-FILE * myopen (char* comando , char* modo){
+int myopen (char* comando , char* modo){
 
 	int dir = (strcmp(modo,"w") == 0), fd[2];
 	pipe(fd);
@@ -18,23 +18,25 @@ FILE * myopen (char* comando , char* modo){
 		dup2(fd[1-dir],1-dir);
 		close(fd[1-dir]);
 
+		//execlp("sh","sh","-c","wc","-l",NULL);
 		execlp("sh","sh","-c",comando,NULL);
 		_exit(1);
 	}
 
+	wait(NULL);
 	close(fd[1-dir]);
 
-	return fdopen(fd[dir],modo);
+	return fd[dir];
 }
 
 
 
 int main(int argc, char *argv[]){
 
-	FILE *p = myopen("wc -l","w");
-	fprintf(p, "OLA\n");
-	fclose(p);
-
+	//int f = myopen("wc -l","w");
+	int f = myopen("ls","w");
+	printf("%d\n",f);
+	close(f);
 	return 0;
 
 }
