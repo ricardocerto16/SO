@@ -33,15 +33,15 @@ kill(0,SINAL) - envia o sinal <SINAL> a todos os processos do mesmo uid do proce
 
 ### Sinais mais Utilizados:
 
-* ** SIGSTOP ** => bloqueia um processo.
-* ** SIGCONT ** => desbloqueia um processo se estiver bloqueado.
-* ** SIGKILL ** => mata um processo.
-* ** SIGUSR1 ** => sinal para ser usado pelo utilizador.
-* ** SIGUSR2 ** => sinal para ser usado pelo utilizador.
-* ** SIGINT  ** => interrupção do terminal (gerado pela tecla DEL ou Break)
-* ** SIGHUP ** => terminal desligado.
-* ** SIGQUIT ** => abortar a execução.
-* **  SIGILL ** => instrução ilegal.
-* **  SIGTERM ** => terminação ordenada do processo.
-* **  SIGCHLD ** => sinal que um processo recebe quando um filho morre (através do exit).
-* **  SIGALRM ** =>  manda o sinal SIGALRM (de alarme) a um processo.
+* **SIGSTOP** => bloqueia um processo.
+* **SIGCONT** => desbloqueia um processo se estiver bloqueado.
+* **SIGKILL** => mata um processo.
+* **SIGUSR1** => sinal para ser usado pelo utilizador.
+* **SIGUSR2** => sinal para ser usado pelo utilizador.
+* **SIGINT** => interrupção do terminal (gerado pela tecla DEL ou Break)
+* **SIGHUP** => terminal desligado.
+* **SIGQUIT** => abortar a execução.
+* **SIGILL** => instrução ilegal.
+* **SIGTERM** => terminação ordenada do processo.
+* **SIGCHLD** => sinal que um processo recebe quando um filho morre (através do exit).
+* **SIGALRM** =>  manda o sinal SIGALRM (de alarme) a um processo.
