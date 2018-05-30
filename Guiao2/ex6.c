@@ -64,3 +64,33 @@ int main( int argc , char **argv) {
 	return 0;
 
 }
+
+
+/* VERSÃO ALTERNATIVA
+void ex6(int x){
+	srand(time(NULL));
+	int matriz[4][100000];
+	pid_t pids[4];
+	int i, j,r=0, status;
+	for ( i = 0; i < 4; i++) {
+		for ( j = 0; j < 100000; j++) {
+			matriz[i][j] = rand() % 200;	
+		}
+	}
+	for ( i = 0; i < 4; i++) {
+		pids[i] = fork();
+		if(pids[i]==0){
+			for ( j = 0; j < 100000; j++) {
+				if(matriz[i][j] == x)	
+					r++;
+			}
+			printf("(Filho %d encontrou %d %d\n", i, r, x);
+			exit(r);
+		}
+	}
+	for(i=0; i<4;i++){
+		waitpid(pids[i],&status,0);
+		printf("(Filho %d encontrou %d %d\n", i, WEXITSTATUS(status), x);
+	}
+}
+*/
