@@ -4,15 +4,14 @@
 
 int main( int argc , char **argv) {
 
-		int x;
-		x = fork();
-		if (x == 0) {
-			printf("filho: %d\n", getpid());
-		}
-		else {
-			printf("pai: %d\n",getpid());
-			wait(NULL);
-		}
+	pid_t pid = fork();
+	if(pid == 0){
+		printf("Sou o processo filho e o meu pid é %d, o do meu pai é %d\n", getpid(),getppid());
+		if(getppid() == 1)
+			printf("Fiquei orfão\n");
+	}
+	else
+		printf("Sou o pai e o meu pid é %d, o do meu pai é %d e o do meu filho é %d\n", getpid(), getppid(),pid);
 }
 
 
