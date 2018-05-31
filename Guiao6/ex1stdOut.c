@@ -40,7 +40,7 @@ int main(int argc, char *argv[]){
 
 	while( (n = read(op,buffer,512)) > 0 ){
 		
-		write(0,buffer,n);
+		write(1,buffer,n);
 
 		printf("Mensagem recebida\n");
 	}
