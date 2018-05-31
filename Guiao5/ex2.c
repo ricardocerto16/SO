@@ -13,8 +13,8 @@ int main(int argc, char *argv[]){
 	int fk, n, r;
 	char buffer[1024];
 	pipe(fd);
-	char * msg1 = "mensagem inicial \n";
-	char * msg2 = "Final \n";
+	//char * msg1 = "mensagem inicial \n";
+	//char * msg2 = "Final \n";
 
 	fk = fork();
 	if( fk == 0) {
@@ -34,8 +34,8 @@ int main(int argc, char *argv[]){
 			sleep(5); // bloqueia o read até ser sido escrito alguma coisa no pipe
 
 			
-			 while((r = read(0,buf,1024)) > 0) {
-            			write(fd[1],buf,r);
+			 while((r = read(0,buffer,1024)) > 0) {
+            			write(fd[1],buffer,r);
 			 }
 			//write(fd[1],msg1,strlen(msg1));
 			//write(fd[1],msg2,strlen(msg2));
