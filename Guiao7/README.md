@@ -13,8 +13,6 @@
 Cada sinal tem associado a si um handler - uma função que é executada quando um sinal é recebido por um processo. Esse handler pode ser alterado pelo utilizador. Os sinais são utilizados para o tratamento de excepções e de acontecimentos assíncronos.
 
 
-
-
 ### Processos:
 O processo destino ao receber o sinal executa o handler que foi associado ao sinal, originando um desvio do programa principal;
 
@@ -30,6 +28,46 @@ Só é possível enviar sinais a processos com mesmo uid (User IDentification).
 
 kill(0,SINAL) - envia o sinal <SINAL> a todos os processos do mesmo uid do processo actual.
 
+
+### Execuções 
+Determinado processo que receba sinais: chamar uma função (system call) signal.
+
+
+signal(5,function) <- quando receber o sinal 5 executa function.
+
+
+logo que possamos chamar signal, declaramos as variáveis da função e depois chamamos signal.
+ signal(10,f) <- quando recebe 10 executa a função f (f é o que quisermos mas não recebe parâmetros).
+ f vai apenas receber o número do sinal, assim podemos saber se está a executar com um sinal
+ 5 ou um sinal 10.
+ 
+ 
+ kill(pid, 5); <- pedir ao sistema operativo que mande um sinal 5 ao procsso pid.
+ f é um handler: uma função que trata os sinais.
+ 
+ 
+ Quando recebe um sinal, é interrompido vai executar o handler e depois volta ao lugar onde estava.
+ 
+ 
+ Pause para a execução do processo, passa para a lista dos bloqueados, até chegar um QUALQUER sinal. 
+ Se eu quero parar até chegar um determinado sinal era preciso fazer um ciclo enquanto ainda não chegou o sinal pretendido.
+ exemplo: while(!signal5) pause(); é o handler que altera isto.
+ 
+ 
+ f() {signal5 = 1;} e signal5 é uma variável global.
+ 
+ 
+ SIGALRM é um número, alarm é uma chamada ao sistema e alarm(x) pede ao sistema operativo para que daqui a x segundos envie um sinal do tipo SIGALRM.
+ 
+ 
+ alarm(10); pause(); <- fica em pausa durante 10 segundos
+ 
+ 
+ sempre que falar em tempo há um alarm por detrás.
+ 
+ 
+ se receber um sinal de alarm tem de estar aberto o signal(SIGALRM, ...).
+ 
 
 ### Sinais mais Utilizados:
 
