@@ -10,7 +10,7 @@
 int main(int argc, char *argv[]){
 	
 	int fd[2];
-	int fk, n;
+	int fk, n, r;
 	char buffer[1024];
 	pipe(fd);
 	char * msg1 = "mensagem inicial \n";
@@ -33,8 +33,12 @@ int main(int argc, char *argv[]){
 			close(fd[0]); // fechou a leitura para o pai
 			sleep(5); // bloqueia o read até ser sido escrito alguma coisa no pipe
 
-			write(fd[1],msg1,strlen(msg1));
-			write(fd[1],msg2,strlen(msg2));
+			
+			 while((r = read(0,buf,1024)) > 0) {
+            			write(fd[1],buf,r);
+			 }
+			//write(fd[1],msg1,strlen(msg1));
+			//write(fd[1],msg2,strlen(msg2));
 
 			close(fd[1]); // fecha a escrita depois de um pai escrever
 
